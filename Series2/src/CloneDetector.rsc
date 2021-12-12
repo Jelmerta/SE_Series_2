@@ -17,14 +17,14 @@ import CloneClassConverter;
 // So in that case there is only one match, which is the method.
 
 // Similarly for type 2 detection, we want to verify the same thing, except it does not matter if types/names do not match.
-list[CloneClass] findClones(loc projectPath) {
-	M3 m3 = createM3FromEclipseProject(projectPath);
+list[CloneClass] findClones(M3 m3) {
+	M3 m3 = createM3FromEclipseProject(m3);
 
-	map[node, set[node]] cloneClassesAst = findAstClones(projectPath, m3);
+	map[node, set[node]] cloneClassesAst = findAstClones(m3);
 	return CloneClassConverter::convertToCloneClasses(cloneClassesAst, m3);
 }
 
-map[node, set[node]] findAstClones(loc projectPath, M3 m3) {
+map[node, set[node]] findAstClones(M3 m3) {
 	list[Declaration] asts = getASTs(m3);
 	map[node, node] srcNodeToNormalizedNodeMap = buildSrcNodeToNormalizedNodeMap(asts);
 	map[node, set[node]] possibleCodeClones = invert(srcNodeToNormalizedNodeMap);

@@ -28,7 +28,7 @@ void runCloneDuplications(loc project, loc outputPath) {
  	
 	int timeBefore = realTime();
 	
-	list[CloneClass] cloneClasses = findClones(project);
+	list[CloneClass] cloneClasses = findClones(m3);
 	println("Amount of clone classes found: " + toString(size(cloneClasses)));
 	writeCloneClassesToFile(outputPath, cloneClasses); 
 	CloneReportProducer::produceCloneReport(m3, cloneClasses);
