@@ -18,8 +18,6 @@ import CloneClassConverter;
 
 // Similarly for type 2 detection, we want to verify the same thing, except it does not matter if types/names do not match.
 list[CloneClass] findClones(M3 m3) {
-	M3 m3 = createM3FromEclipseProject(m3);
-
 	map[node, set[node]] cloneClassesAst = findAstClones(m3);
 	return CloneClassConverter::convertToCloneClasses(cloneClassesAst, m3);
 }
