@@ -1,18 +1,20 @@
 module tests::Type1CloneDetectionTest
 
+import lang::java::jdt::m3::Core;
+import List;
+
 import CloneDetector;
 import CloneClassConverter;
 import CloneDataTypes;
 
-import List;
-
 test bool testTypeOne() {
 	loc duplicationSameLineSixTimes = |project://CodeDuplicationTestOneBlock|;
+	M3 m3 = createM3FromEclipseProject(duplicationSameLineSixTimes);
 	
 	int expectedAmountOfCodeClasses = 1;
 	int expectedAmountOfDuplications = 6;
 	
-	list[CloneClass] cloneClasses = findClones(duplicationSameLineSixTimes);
+	list[CloneClass] cloneClasses = findClones(m3);
 	
 	 expectedAmountOfCodeClasses == size(cloneClasses);
 	list[Duplication] duplications = cloneClasses[0].duplications;
@@ -23,11 +25,12 @@ test bool testTypeOne() {
 
 test bool testSubsumption() {
 	loc duplicationsWithSubsumptions = |project://ClonesWithSubsumption|;
+	M3 m3 = createM3FromEclipseProject(duplicationsWithSubsumptions);
 	
 	int expectedAmountOfCodeClasses = 2;
 	int expectedAmountOfDuplications = 2;
 	
-	list[CloneClass] cloneClasses = findClones(duplicationsWithSubsumptions);
+	list[CloneClass] cloneClasses = findClones(m3);
 	assert expectedAmountOfCodeClasses == size(cloneClasses);
 	list[Duplication] duplications = cloneClasses[0].duplications;
 	assert expectedAmountOfDuplications == size(duplications);
@@ -38,13 +41,14 @@ test bool testSubsumption() {
 }
 
 test bool testSubsumptionOneNotSubsumed() {
-	loc duplicationsWithSubsumptions = |project://ClonesWithSubsumptionNotInClone|;
+	loc duplicationsWithSubsumptionsNotInClone = |project://ClonesWithSubsumptionNotInClone|;
+	M3 m3 = createM3FromEclipseProject(duplicationsWithSubsumptionsNotInClone);
 	
 	int expectedAmountOfCodeClasses = 3;
 	set[int] expectedAmountOfDuplications = {2,5}; // Not the greatest test as we check multiple amount of duplications (we want to match 2-2-5 in any order, but this matches more). Still gives us good confidence.
 	set[int] foundAmountOfDuplications = {};
 	
-	list[CloneClass] cloneClasses = findClones(duplicationsWithSubsumptions);
+	list[CloneClass] cloneClasses = findClones(m3);
 	assert expectedAmountOfCodeClasses == size(cloneClasses);
 	
 	list[Duplication] duplications = cloneClasses[0].duplications;
