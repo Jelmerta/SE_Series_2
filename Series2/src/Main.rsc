@@ -30,10 +30,24 @@ void runCloneDuplications(loc project, loc outputPath) {
 	
 	list[CloneClass] cloneClasses = findClones(m3);
 	println("Amount of clone classes found: " + toString(size(cloneClasses)));
+	
+	cloneClasses = filterByTreeMass(cloneClasses, MIN_TREE_MASS);
+	cloneClasses = filterByLineAmount(cloneClasses, MIN_LINE_AMOUNT);
+	
 	writeCloneClassesToFile(outputPath, cloneClasses); 
 	CloneReportProducer::produceCloneReport(m3, cloneClasses);
 	
 	int timeAfter = realTime();
 	int executionTime = (timeAfter - timeBefore) / 1000;
 	println("It took " + toString(executionTime) + " seconds to find the duplications.");
+}
+
+list[CloneClass] filterByTreeMass(list[CloneClass] cloneClasses, int minTreeMass) {
+	return [cloneClass | cloneClass <- cloneClasses, cloneClass.treeSize >= minTreeMass];
+}
+
+list[CloneClass] filterByLineAmount(list[CloneClass] cloneClasses, int minLineAmount) {
+	// Assumption is made: duplications have approximately the same amount of lines
+	// We noticed at least one place (with an @Override) where this is not true.
+	return [cloneClass | cloneClass <- cloneClasses, cloneClass.duplications[0].amountOfLines >= minLineAmount];
 }

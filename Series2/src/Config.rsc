@@ -12,8 +12,8 @@ public loc PROJECT = smallSql;
 public loc OUTPUT = |home:///clones.json|;
 
 public int MIN_TREE_MASS = 1;
-public int MIN_LINE_AMOUNT = 1;
+public int MIN_LINE_AMOUNT = 4;
 public int AMOUNT_OF_EXAMPLES = 5;
 
 data CloneType = cloneType(str name);
-public CloneType cloneType = cloneType("Type1"); // Rascal does not seem to have enums, value for clone type should be "Type1" or "Type2".
+public CloneType cloneType = cloneType("JustRemoveAllIdentifiers"); // Rascal does not seem to have enums, value for clone type should be "Type1" or "Type2" or "JustRemoveAllIdentifiers" (for a syntax check).

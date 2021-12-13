@@ -11,9 +11,6 @@ import Set;
 import Config;
 
 void produceCloneReport(M3 m3, list[CloneClass] cloneClasses) {
-	cloneClasses = filterByTreeMass(cloneClasses, MIN_TREE_MASS);
-	cloneClasses = filterByLineAmount(cloneClasses, MIN_LINE_AMOUNT);
-
 	int amountOfCodeLinesInProject = findAmountOfCodeLinesInProject(m3);
 	int amountOfDuplicatedLines = calculateLinesDuplicatedForCloneClasses(cloneClasses);
 	
@@ -32,14 +29,6 @@ void produceCloneReport(M3 m3, list[CloneClass] cloneClasses) {
 	
 	CloneReport cloneReport = cloneReport(amountOfDuplicatedLines, amountOfCodeLinesInProject, percentageDuplicatedLines, numberOfClones, numberOfCloneClasses, biggestClone, biggestCloneClass, exampleClones);
 	writeCloneReport(cloneReport);
-}
-
-list[CloneClass] filterByTreeMass(list[CloneClass] cloneClasses, int minTreeMass) {
-	return [cloneClass | cloneClass <- cloneClasses, cloneClass.treeSize >= minTreeMass];
-}
-
-list[CloneClass] filterByLineAmount(list[CloneClass] cloneClasses, int minLineAmount) {
-	return [cloneClass | cloneClass <- cloneClasses, cloneClass.amountOfLines >= minLineAmount];
 }
 
 int findNumberOfClones(list[CloneClass] cloneClasses) {

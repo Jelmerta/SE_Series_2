@@ -15,10 +15,9 @@ test bool testTypeTwoMethods() {
 	
 	int expectedAmountOfCodeClasses = 1;
 	int expectedAmountOfDuplications = 2;
-	int expectedLineAmount = 3;
+	int expectedLineAmount = 4;
 	
 	list[CloneClass] cloneClasses = findClones(m3);
-	
  	expectedAmountOfCodeClasses == size(cloneClasses);
 	list[Duplication] duplications = cloneClasses[0].duplications;
 	assert expectedAmountOfDuplications == size(duplications);
@@ -76,6 +75,26 @@ test bool testTypeTwoTypeIdentifier() {
 	int expectedAmountOfCodeClasses = 1;
 	int expectedAmountOfDuplications = 2;
 	int expectedLineAmount = 4;
+	
+	list[CloneClass] cloneClasses = findClones(m3);
+	
+ 	expectedAmountOfCodeClasses == size(cloneClasses);
+	list[Duplication] duplications = cloneClasses[0].duplications;
+	assert expectedAmountOfDuplications == size(duplications);
+	
+	Duplication firstDuplication = duplications[0];
+	assert expectedLineAmount == size(firstDuplication.lines);
+	
+	return true; // All asserts succeeded, so we can just return true...
+}
+
+test bool testTypeTwoTypeIdentifierReturn() {
+	loc project = |project://Type2TypeIdentifierReturn|;
+	M3 m3 = createM3FromEclipseProject(project);
+	
+	int expectedAmountOfCodeClasses = 1;
+	int expectedAmountOfDuplications = 2;
+	int expectedLineAmount = 5;
 	
 	list[CloneClass] cloneClasses = findClones(m3);
 	

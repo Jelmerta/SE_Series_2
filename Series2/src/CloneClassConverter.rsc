@@ -19,14 +19,13 @@ CloneClass convertToCloneClass(node astCloneClass, set[node] duplications, map[F
 	int amountOfDuplications = size(duplications);
 	// An assumption is made that the depth of the ast of different clones is the same, which should be the case for type 1/2 clones
 	// Making it random introduces nondeterminism, but this is not great either as the metrics will actually change depending on which duplication is chosen.
-	node exampleDuplication = toList(duplications)[0];//getOneFrom(duplications);
+	node exampleDuplicationNode = toList(duplications)[0];//getOneFrom(duplications);
 
-	int treeSize = findTreeSize(exampleDuplication);
-	int amountOfLines = calculateAmountOfLinesInNode(exampleDuplication);
+	int treeSize = findTreeSize(exampleDuplicationNode);
 	
 	list[Duplication] duplicationsInClass = convertDuplications(duplications, locModel);
 	
-	return cloneClass(cloneClassName, amountOfDuplications, treeSize, amountOfLines, duplicationsInClass);
+	return cloneClass(cloneClassName, amountOfDuplications, treeSize, duplicationsInClass);
 }
 
 int calculateAmountOfLinesInNode(node n) {
@@ -44,7 +43,7 @@ list[Duplication] convertDuplications(set[node] duplicationsAst, map[FileLineInd
 		if (loc source := duplicationAst.src) { // Used to convert value to src
 			list[int] codeLineIndices = toIndices(source, locModel);
 			list[str] codeLines = toCode(source.path, codeLineIndices, locModel);
-			duplications += duplication(source.path, codeLineIndices, codeLines);
+			duplications += duplication(source.path, codeLineIndices, codeLines, size(codeLines));
 		}
 	}
 	return duplications;

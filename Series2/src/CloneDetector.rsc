@@ -25,7 +25,6 @@ list[CloneClass] findClones(M3 m3) {
 
 map[node, set[node]] findAstClones(M3 m3) {
 	list[Declaration] asts = getASTs(m3);
-	asts = normalizeAstForType(asts);
 	map[node, node] srcNodeToNormalizedNodeMap = buildSrcNodeToNormalizedNodeMap(asts);
 	map[node, set[node]] possibleCodeClones = invert(srcNodeToNormalizedNodeMap);
 	map[node, set[node]] codeClasses = filterDuplicates(possibleCodeClones);
@@ -45,7 +44,7 @@ map[node, node] buildSrcNodeToNormalizedNodeMap(list[Declaration] asts) {
 	
 	// unsetRec is used to remove source from the node.
 	// The descendant operator is used for a deep match, instead of using the visit pattern.
-	return (srcNode : unsetRec(srcNode) | /node srcNode <- asts, srcNode.src?); 
+	return (srcNode : normalizeAstForType(unsetRec(srcNode)) | /node srcNode <- asts, srcNode.src?); 
 }
 
 map[node, set[node]] filterDuplicates(map[node, set[node]] codeClasses) {
