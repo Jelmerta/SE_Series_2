@@ -49,6 +49,8 @@ int findNumberOfClones(list[CloneClass] cloneClasses) {
 Duplication findBiggestClone(list[CloneClass] cloneClasses) {
 	Duplication biggestClone = cloneClasses[0].duplications[0];
 	for (CloneClass cloneClass <- cloneClasses) {
+		println(cloneClass.cloneClassName);
+		println();
 		for (Duplication duplication <- cloneClass.duplications) {
 			if (size(duplication.lines) > size(biggestClone.lines)) {
 				biggestClone = duplication;

@@ -10,6 +10,7 @@ import Map;
 
 import CloneDataTypes;
 import CloneClassConverter;
+import AstTypeNormalization;
 
 // For Type 1 clone detection, we want to make sure that exact matches are found.
 // We want to make sure that the largest node size is found (subsumption):
@@ -24,6 +25,7 @@ list[CloneClass] findClones(M3 m3) {
 
 map[node, set[node]] findAstClones(M3 m3) {
 	list[Declaration] asts = getASTs(m3);
+	asts = normalizeAstForType(asts);
 	map[node, node] srcNodeToNormalizedNodeMap = buildSrcNodeToNormalizedNodeMap(asts);
 	map[node, set[node]] possibleCodeClones = invert(srcNodeToNormalizedNodeMap);
 	map[node, set[node]] codeClasses = filterDuplicates(possibleCodeClones);

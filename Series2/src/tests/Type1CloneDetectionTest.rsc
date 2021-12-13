@@ -7,6 +7,8 @@ import CloneDetector;
 import CloneClassConverter;
 import CloneDataTypes;
 
+// Before running type 1 tests, make sure to set the config file right! Sadly we do not yet have a possibility to set the config in the unit test.
+
 test bool testTypeOne() {
 	loc duplicationSameLineSixTimes = |project://CodeDuplicationTestOneBlock|;
 	M3 m3 = createM3FromEclipseProject(duplicationSameLineSixTimes);
