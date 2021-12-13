@@ -49,8 +49,6 @@ int findNumberOfClones(list[CloneClass] cloneClasses) {
 Duplication findBiggestClone(list[CloneClass] cloneClasses) {
 	Duplication biggestClone = cloneClasses[0].duplications[0];
 	for (CloneClass cloneClass <- cloneClasses) {
-		println(cloneClass.cloneClassName);
-		println();
 		for (Duplication duplication <- cloneClass.duplications) {
 			if (size(duplication.lines) > size(biggestClone.lines)) {
 				biggestClone = duplication;
@@ -91,6 +89,7 @@ void writeCloneReport(CloneReport cloneReport) {
 	println();
 	println("----- CONFIG -----");
 	println("CHOSEN PROJECT: " + PROJECT.uri);
+	println("USING CLONE TYPE: " + cloneType.name);
 	println("MINIMUM AST TREE MASS: " + toString(MIN_TREE_MASS));
 	println("MINIMUM AMOUNT OF LINES IN DUPLICATION: " + toString(MIN_LINE_AMOUNT));
 	println();
@@ -110,14 +109,14 @@ void writeCloneReport(CloneReport cloneReport) {
 	}
 	println();
 	println("MOST FREQUENT OCURRING CLONE CLASS WITH " + toString(cloneReport.biggestCloneClass.amountOfDuplications) + " DUPLICATIONS:");
-	list[str] biggestCloneCode = cloneReport.biggestCloneClass.duplications[0].code;
+	list[str] biggestCloneCode = getOneFrom(cloneReport.biggestCloneClass.duplications).code;
 	for (str line <- biggestCloneCode) {
 		println(line);
 	}
 	println();
 	println("EXAMPLE CLONES:");
 	for (CloneClass exampleClone <- cloneReport.exampleClones) {
-		list[str] exampleCloneCode = exampleClone.duplications[0].code;
+		list[str] exampleCloneCode = getOneFrom(exampleClone.duplications).code;
 		for (str line <- exampleCloneCode) {
 			println(line);
 		}

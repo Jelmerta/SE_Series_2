@@ -18,7 +18,8 @@ CloneClass convertToCloneClass(node astCloneClass, set[node] duplications, map[F
 	str cloneClassName = toString(astCloneClass);
 	int amountOfDuplications = size(duplications);
 	// An assumption is made that the depth of the ast of different clones is the same, which should be the case for type 1/2 clones
-	node exampleDuplication = getOneFrom(duplications);
+	// Making it random introduces nondeterminism, but this is not great either as the metrics will actually change depending on which duplication is chosen.
+	node exampleDuplication = toList(duplications)[0];//getOneFrom(duplications);
 
 	int treeSize = findTreeSize(exampleDuplication);
 	int amountOfLines = calculateAmountOfLinesInNode(exampleDuplication);

@@ -1,3 +1,6 @@
+// Fun note: This project with type 2 actually gives us 1 clone with 5 duplications.
+// This may explain why we get fewer clone classes for type 2.
+
 class ClonesWithSubsumptionNotInClone {
 	// Both functions are also identically found in the other class.
 	// The line "int i = 1;" is found 5 times in total, 4 of them should be subsumed by other clones,
