@@ -17,8 +17,6 @@ node normalizeAstForType(node ast) {
 	}
 }
 	
-// Definition from https://link.springer.com/content/pdf/10.1007%2F978-3-540-76440-3.pdf:
-// • Type 2 is a syntactically identical copy; only variable, type, or function identifiers have been changed.
 list[node] normalizeType2(list[node] asts) {
 	list[Declaration] normalizedAsts = [];
 	for (Declaration ast <- asts) {
@@ -27,6 +25,10 @@ list[node] normalizeType2(list[node] asts) {
 	return normalizedAsts;
 }
 
+// Definition from https://link.springer.com/content/pdf/10.1007%2F978-3-540-76440-3.pdf:
+// • Type 2 is a syntactically identical copy; only variable, type, or function identifiers have been changed.
+// We have implemented this very exactly according to what identifier should be normalized in this definition.
+// A separate implementation that removes all identifiers is shown after this type.
 node normalizeType2(node ast) {
 	Type normalizedType = \void();
 	str normalizedName = "";
@@ -39,14 +41,6 @@ node normalizeType2(node ast) {
 		case \method(returnType, _, parameters, exceptions) => \method(returnType, normalizedName, parameters, exceptions)
 		case \variable(_, extraDimensions) => \variable(normalizedName, extraDimensions)
 		case \variable(_, extraDimensions, initializer) => \variable(normalizedName, extraDimensions, initializer)
-		
-		// Are these needed? Probably not: Actually changes logic...?
-		//case \simpleName(_) => \simpleName(normalizedName)
-		//case \stringLiteral(_) => \stringLiteral(normalizedName)
-		// Method call seems logical as we also have the normalization for methods? But that is not specifically a method identifier, so we will not add this.
-		// Mehtod call is kind of a variable as well though
-		
-		// Parameter? typeParameter? Seems unnecessary as method parameters are already matched.
 	};
 }
 
@@ -68,12 +62,11 @@ node normalizeAllIdentifiers(node ast) {
 		case \package(declaration, _) => \package(declaration, normalizedName)
 		case \typeParameter(_, extendsList) => \typeParameter(normalizedName, extendsList)
 		case \annotationType(_, body) => \annotationType(normalizedName, body)
-		// Do not work?
-		//case \annotationTypeMember(type, _) => \annotationTypeMember(type, normalizedName)
-		//case \annotationTypeMember(type, _, defaultBlock) => \annotationTypeMember(type, normalizedName, defaultBlock)
-		//case \parameter(type, _, extraDimensions) => \parameter(type, normalizedName, extraDimensions)
-		//case \vararg(type, _) => \vararg(type, normalizedName)
-		//
+		case \annotationTypeMember(typeVar, _) => \annotationTypeMember(typeVar, normalizedName)
+		case \annotationTypeMember(typeVar, _, defaultBlock) => \annotationTypeMember(typeVar, normalizedName, defaultBlock)
+		case \parameter(typeVar, _, extraDimensions) => \parameter(typeVar, normalizedName, extraDimensions)
+		case \vararg(typeVar, _) => \vararg(typeVar, normalizedName)
+		
 		case \fieldAccess(isSuper, expression, _) => \fieldAccess(isSuper, expression, normalizedName)
 		case \fieldAccess(isSuper, _) => \fieldAccess(isSuper, normalizedName)
 		case \methodCall(isSuper, _, arguments) => \methodCall(isSuper, normalizedName, arguments)
@@ -83,13 +76,12 @@ node normalizeAllIdentifiers(node ast) {
 		case \simpleName(_) => \simpleName(normalizedName)
 		case \markerAnnotation(_) => \markerAnnotation(normalizedName) // Typename?
 		case \normalAnnotation(_, memberValuePairs) => \normalAnnotation(normalizedName, memberValuePairs) // Typename?
-		// Do not work?
-		//case \memberValuePair(_, value) => \memberValuePair(normalizedName, value)
-		//case \singleMemberAnnotation(_, value) => \singleMemberAnnotation(normalizedName, value) // Typename?
+		case \memberValuePair(_, valueVar) => \memberValuePair(normalizedName, valueVar)
+		case \singleMemberAnnotation(_, valueVar) => \singleMemberAnnotation(normalizedName, valueVar) // Typename?
 		
 		case \label(_, body) => \label(normalizedName, body)
 		
 		case Type _ => normalizedType
-		case \type(_) => \type(normalizedType) // Used as an expression, and immediately goes to Type, is this really relevant?
+		case \type(_) => \type(normalizedType) // Used as an expression, and immediately goes to Type, probably not too relevant, but does not hurt either?
 	};
 }
