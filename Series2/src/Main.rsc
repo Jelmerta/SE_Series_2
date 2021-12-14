@@ -29,7 +29,6 @@ void runCloneDuplications(loc project, loc outputPath) {
 	int timeBefore = realTime();
 	
 	list[CloneClass] cloneClasses = findClones(m3);
-	println("Amount of clone classes found: " + toString(size(cloneClasses)));
 	
 	cloneClasses = filterByTreeMass(cloneClasses, MIN_TREE_MASS);
 	cloneClasses = filterByLineAmount(cloneClasses, MIN_LINE_AMOUNT);

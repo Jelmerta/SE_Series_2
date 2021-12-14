@@ -12,7 +12,7 @@ public loc PROJECT = smallSql;
 public loc OUTPUT = |home:///clones.json|;
 
 public int MIN_TREE_MASS = 1;
-public int MIN_LINE_AMOUNT = 4;
+public int MIN_LINE_AMOUNT = 6;
 public int AMOUNT_OF_EXAMPLES = 5;
 
 data CloneType = cloneType(str name);
