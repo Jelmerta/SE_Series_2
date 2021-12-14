@@ -4,7 +4,6 @@ import IO;
 import lang::java::jdt::m3::Core;
 import util::Benchmark;
 import util::Math;
-import List;
 
 import CloneDetector;
 import CloneClassConverter;
@@ -41,6 +40,7 @@ void runCloneDuplications(loc project, loc outputPath) {
 	println("It took " + toString(executionTime) + " seconds to find the duplications.");
 }
 
+// Filters on clone classes placed here so unit tests can make use of findClones without setting configuration. Can be moved if unit tests can set configuration.
 list[CloneClass] filterByTreeMass(list[CloneClass] cloneClasses, int minTreeMass) {
 	return [cloneClass | cloneClass <- cloneClasses, cloneClass.treeSize >= minTreeMass];
 }
