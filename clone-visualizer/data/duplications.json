@@ -1,0 +1,24 @@
+[
+  {
+    "duplication":
+    {
+      "duplicatedCode": "ThisIsDuplicatedCode",
+      "foundLocations":
+      [
+        "|home:///example3.txt|(0,1,<2,3>,<4,5>)",
+        "|home:///example.txt|(0,1,<2,3>,<4,5>)"
+      ]
+    }
+  },
+  {
+    "duplication":
+    {
+      "duplicatedCode": "ThisIsTheSecondDuplicatedBlock",
+      "foundLocations":
+      [
+        "|home:///example5.txt|(0,1,<2,3>,<4,5>)",
+        "|home:///example.txt|(0,1,<2,3>,<4,5>)"
+      ]
+    }
+  }
+]
