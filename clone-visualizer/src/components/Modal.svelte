@@ -17,10 +17,32 @@
         </header>
         <section class="modal-card-body">
             {#each data as d}
-                <div>
-                    <p>{d.location}</p>
-                    <p>{d.code}</p>
-                </div>
+                <article class="panel is-warning">
+                    <p class="panel-heading">
+                        {d.cloneClassName}
+                    </p>
+                    <div class="panel-block">
+                        <p class="subtitle">Amount of line duplicated: {d.amountOfLines}</p>
+                    </div>
+                    <div class="panel-block">
+                        <table class="table is-striped">
+                            <thead>
+                            <tr>
+                                <th>Line Number</th>
+                                <th>Line of Code</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {#each d .sourceCodeTable as code}
+                                <tr>
+                                    <td>{code[0]}</td>
+                                    <td>{code[1]}</td>
+                                </tr>
+                            {/each}
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
             {/each}
         </section>
     </div>

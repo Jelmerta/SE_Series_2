@@ -1,6 +1,6 @@
 <script>
     import {onMount} from "svelte";
-    import * as duplicates from '../../data/example.json';
+    import * as duplicates from '../../data/clones.json';
     import Modal from "./Modal.svelte";
 
     let filesArray = [];
@@ -11,7 +11,7 @@
     onMount(() => {
         duplicates.default.map(duplication => {
             duplication.cloneClass.duplications.map(source => {
-                let fileName = source.duplication.location.match(/\|(.*)\|/).pop();
+                let fileName = source.duplication.filePath;
 
                 let existsFile = filesArray.find(fileInArray => fileInArray.file === fileName);
 
@@ -22,14 +22,22 @@
                         filesArray.splice(index, 1);
                     }
 
-                    existsFile.meta = [...existsFile.meta, source.duplication];
+                    existsFile.meta = [...existsFile.meta, {
+                        "cloneClassName": duplication.cloneClass.cloneClassName,
+                        "amountOfLines": source.duplication.amountOfLines,
+                        "sourceCodeTable": zipCodeAndLines(source.duplication.lines, source.duplication.code)
+                    }];
                     existsFile.count += 1;
 
                     filesArray = [...filesArray, existsFile];
                 } else {
                     let newFile = {
                         "file": fileName,
-                        "meta": [source.duplication],
+                        "meta": [{
+                            "cloneClassName": duplication.cloneClass.cloneClassName,
+                            "amountOfLines": source.duplication.amountOfLines,
+                            "sourceCodeTable": zipCodeAndLines(source.duplication.lines, source.duplication.code)
+                        }],
                         "count": 1
                     }
 
@@ -38,8 +46,14 @@
             })
         });
 
-        filesArray.sort((a, b) => (a.file > b.file) ? 1 : ((b.file > a.file) ? -1 : 0));
+        filesArray.sort((a, b) => (a.count < b.count) ? 1 : ((b.count < a.count) ? -1 : 0));
     });
+
+    const zipCodeAndLines = (a, b) => {
+        return a.map(function (e, i) {
+            return [e, b[i]];
+        });
+    }
 
     const showModal = meta => {
         data = meta;
