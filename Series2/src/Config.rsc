@@ -8,7 +8,7 @@ private loc type2Types = |project://Type2TypeIdentifier|;
 private loc subsumptionNotInClone = |project://ClonesWithSubsumptionNotInClone|;
 private loc subsumption = |project://ClonesWithSubsumption|;
 
-public loc PROJECT = smallSql;
+public loc PROJECT = hsql;
 public loc OUTPUT = |home:///clones.json|;
 
 public int MIN_TREE_MASS = 1;
