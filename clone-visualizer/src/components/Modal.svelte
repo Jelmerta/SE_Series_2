@@ -33,7 +33,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {#each d .sourceCodeTable as code}
+                            {#each d.sourceCodeTable as code}
                                 <tr>
                                     <td>{code[0]}</td>
                                     <td>{code[1]}</td>

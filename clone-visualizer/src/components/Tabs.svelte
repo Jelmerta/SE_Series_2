@@ -2,7 +2,7 @@
     import FileExplorer from "./FileExplorer.svelte";
     import About from "./About.svelte";
     import SourceViewer from "./SourceViewer.svelte";
-    import TreeMap from "./TreeMap.svelte";
+    import TreeMap from "./TreeMap/TreeMap.svelte";
 
     const ab = "ab";
     const fe = "fe";
@@ -33,7 +33,7 @@
         <li on:click={() => clickHandler(ab)} class="{current === ab ? 'is-active' : ''}"><a>About</a></li>
         <li on:click={() => clickHandler(fe)} class="{current === fe ? 'is-active' : ''}"><a>File Explorer</a></li>
         <li on:click={() => clickHandler(tm)} class="{current === tm ? 'is-active' : ''}"><a>Tree Map</a></li>
-        <li on:click={() => clickHandler(sv)} class="{current === sv ? 'is-active' : ''}"><a>JSON</a></li>
+<!--        <li on:click={() => clickHandler(sv)} class="{current === sv ? 'is-active' : ''}"><a>JSON</a></li>-->
     </ul>
 </div>
 
