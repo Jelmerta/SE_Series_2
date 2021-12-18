@@ -109,12 +109,12 @@
             {#if is_visible(node, selected)}
                 <div
                         transition:fade={{duration:400}}
-                        class="node"
+                        class="node text-wrap"
                         class:leaf={!node.children}
                         on:click="{() => select(node)}"
                 >
-                    <div class="contents">
-                        <strong>{node.data.name}</strong>
+                    <div class="treemap-contents">
+                        <strong class="wrap-text">{node.data.name}</strong>
                         <span>{yootils.commas(node.value)}</span>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
         cursor: pointer;
     }
 
-    .contents {
+    .treemap-contents {
         width: 100%;
         height: 100%;
         padding: 0.3rem 0.4rem;
@@ -174,14 +174,24 @@
         box-sizing: border-box;
     }
 
-    .node:not(.leaf) .contents {
+    .node:not(.leaf) .treemap-contents {
         background-color: hsl(240, 8%, 44%);
     }
 
     strong, span {
         display: block;
         font-size: 12px;
-        white-space: nowrap;
+        /*white-space: nowrap;*/
         line-height: 1;
+        color: white !important;
+    }
+
+    .wrap-text{
+        display: block;/* or inline-block */
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        overflow: hidden;
+        max-height: 3.6em;
+        line-height: 1.8em;
     }
 </style>

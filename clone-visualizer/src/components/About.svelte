@@ -2,7 +2,7 @@
     import Benchmark from "./Benchmark.svelte";
 </script>
 
-<div class="columns content">
+<div class="section content mt-0 pt-0">
     <div class="column is-two-thirds">
         <p>
             This clone visualizer uses a Rascal backend that detects type 1 and type 2 clones in your Java codebase.
@@ -41,7 +41,7 @@
             </ul>
         </ul>
     </div>
-    <div class="column">
-        <Benchmark/>
-    </div>
+<!--    <div class="column">-->
+<!--        <Benchmark/>-->
+<!--    </div>-->
 </div>
